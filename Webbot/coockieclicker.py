@@ -15,13 +15,25 @@ cookie = driver.find_element_by_id("bigCookie")
 cookie_count = driver.find_element_by_id("cookies")
 items = [driver.find_element_by_id("productPrice" + str(i)) for i in range(1, -1, -1)]
 
+cursorCounter = 0
+    
+
 actions = ActionChains(driver)
+
+
+def cursor():
+    clicker = driver.find_element_by_id("upgrade0")
+    upgrade_actions = ActionChains(driver)
+    upgrade_actions.move_to_element(clicker)
+    upgrade_actions.click()
+    upgrade_actions.perform()
 
 while True:
     actions.click(cookie)
     actions.perform()
     #delar på stringen och gör den till en int
     count = int(cookie_count.text.split(" ")[0])
+    
     for item in items:
         value = int(item.text)
         if value <= count:
@@ -29,4 +41,14 @@ while True:
             upgrade_actions.move_to_element(item)
             upgrade_actions.click()
             upgrade_actions.perform()
+            cursorCounter+=1
+    
 
+    if(cursorCounter > 0) and (count > 100):  
+       cursor()
+       print("hej")
+
+
+
+
+    
